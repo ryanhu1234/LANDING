@@ -1,94 +1,134 @@
-<script language="JavaScript">
+/*
+TODO:
+    Limit number input
+    Disallow . from being entered multiple times
+    Clean up structure
+*/
 
-var nl = getNewLine()
+(function() {
+  "use strict";
 
-function getNewLine() {
-	var agent = navigator.userAgent
+  // Shortcut to get elements
+  var el = function(element) {
+    if (element.charAt(0) === "#") { // If passed an ID...
+      return document.querySelector(element); // ... returns single element
+    }
 
-	if (agent.indexOf("Win") >= 0)
-		return "\r\n"
-	else
-		if (agent.indexOf("Mac") >= 0)
-			return "\r"
+    return document.querySelectorAll(element); // Otherwise, returns a nodelist
+  };
 
- 	return "\r"
+  // Variables
+  var viewer = el("#viewer"), // Calculator screen where result is displayed
+    equals = el("#equals"), // Equal button
+    nums = el(".num"), // List of numbers
+    ops = el(".ops"), // List of operators
+    theNum = "", // Current number
+    oldNum = "", // First number
+    resultNum, // Result
+    operator; // Batman
 
-}
+  // When: Number is clicked. Get the current number selected
+  var setNum = function() {
+    if (resultNum) { // If a result was displayed, reset number
+      theNum = this.getAttribute("data-num");
+      resultNum = "";
+    } else { // Otherwise, add digit to previous number (this is a string!)
+      theNum += this.getAttribute("data-num");
+    }
 
-pagecode = 'import math
-while 1 == 1:
-  cho1 = input("normal or trig ")
-  if cho1 == \'normal\':
-    print ("This is a basic four function calculator")
+    viewer.innerHTML = theNum; // Display current number
 
-    #define the operations
-    def add (x, y):return x + y
-    def subtract (x, y):return x - y
-    def multiply (x, y):return x * y
-    def divide (x, y):return x / y
+  };
 
-    #shows options
-    print ("Select operation.")
-    print ("+")
-    print ("-")
-    print ("*")
-    print ("/")
+  // When: Operator is clicked. Pass number to oldNum and save operator
+  var moveNum = function() {
+    oldNum = theNum;
+    theNum = "";
+    operator = this.getAttribute("data-ops");
 
+    equals.setAttribute("data-result", ""); // Reset result in attr
+  };
 
-    #inputs
-    typ = input (\'Please input your choice \')
-    in2 = float (input ("please input your first number "))
-    in3 = float (input ("please input your second number "))
+  // When: Equals is clicked. Calculate result
+  var displayNum = function() {
 
-    #does correct operation and does the math
-    if typ == \'+\':
-        print (add (in2, in3)) 
-    elif typ == \'-\':
-        print (subtract (in2, in3)) 
-    elif typ == \'*\':
-        print (multiply (in2, in3)) 
-    elif typ == \'/\':
-        print (divide (in2, in3))
-    elif typ != \'+\' or \'-\' or \'*\' or \'/\':
-        print("Nonexistant operation!")
-  elif cho1 == \'trig\':
-    cho2 = input(\'convert or functions \')
-    if cho2 == \'convert\':
-      #asks what calc they want
-      print ("What would you like to convert")
+    // Convert string input to numbers
+    oldNum = parseFloat(oldNum);
+    theNum = parseFloat(theNum);
 
-      #takes input and populates variable conchoice and numconvert
-      conchoice = str(input(\'r to d or d to r \'))
-      numconvert = float(input("what value would you like to convert "))
+    // Perform operation
+    switch (operator) {
+      case "plus":
+        resultNum = oldNum + theNum;
+        break;
 
-    #uses variable q and e to choose between math.degrees and math.radians
-      if conchoice == \'r to d\':
-          print (math.degrees(numconvert))
-      elif conchoice == \'d to r\':
-         print (math.radians(numconvert))
-      elif conchoice != \'d to r\' or \'r to d\':
-          print ("You typed an incorrect choice!")
-    if cho2 == \'functions\':
-      #outputs options
-      print ("This is a Cosine, Sine, and Tangent calculator")
-      print(\'cos\')
-      print(\'sin\')
-      print(\'tan\')
+      case "minus":
+        resultNum = oldNum - theNum;
+        break;
 
-       #inputs
-      func = str(input(\'What trig function would you like \'))
-      inval = float(input("Input value "))
+      case "times":
+        resultNum = oldNum * theNum;
+        break;
 
-      #does the selected option and uses variable var 
-      if func == \'cos\' :
-          print (math.cos(inval))
-      elif func == \'sin\' :
-          print (math.sin(inval))
-      elif func == \'tan\' :
-          print (math.tan(inval))
-      elif func != \'cos\' or \'sin\' or \'tan\':
-          print ("You typed an incorect value or function type!")'
+      case "divided by":
+        resultNum = oldNum / theNum;
+        break;
 
-document.write(pagecode);
+        // If equal is pressed without an operator, keep number and continue
+      default:
+        resultNum = theNum;
+    }
 
-</script>
+    // If NaN or Infinity returned
+    if (!isFinite(resultNum)) {
+      if (isNaN(resultNum)) { // If result is not a number; set off by, eg, double-clicking operators
+        resultNum = "You broke it!";
+      } else { // If result is infinity, set off by dividing by zero
+        resultNum = "Look at what you've done";
+        el('#calculator').classList.add("broken"); // Break calculator
+        el('#reset').classList.add("show"); // And show reset button
+      }
+    }
+
+    // Display result, finally!
+    viewer.innerHTML = resultNum;
+    equals.setAttribute("data-result", resultNum);
+
+    // Now reset oldNum & keep result
+    oldNum = 0;
+    theNum = resultNum;
+
+  };
+
+  // When: Clear button is pressed. Clear everything
+  var clearAll = function() {
+    oldNum = "";
+    theNum = "";
+    viewer.innerHTML = "0";
+    equals.setAttribute("data-result", resultNum);
+  };
+
+  /* The click events */
+
+  // Add click event to numbers
+  for (var i = 0, l = nums.length; i < l; i++) {
+    nums[i].onclick = setNum;
+  }
+
+  // Add click event to operators
+  for (var i = 0, l = ops.length; i < l; i++) {
+    ops[i].onclick = moveNum;
+  }
+
+  // Add click event to equal sign
+  equals.onclick = displayNum;
+
+  // Add click event to clear button
+  el("#clear").onclick = clearAll;
+
+  // Add click event to reset button
+  el("#reset").onclick = function() {
+    window.location = window.location;
+  };
+
+}());
