@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+body {
+  background: url("https://ryanhubler.com/stream/media/pictures/daylight-environment-forest-459225.jpg");
+  background-size: cover;
+  
+  
+}
+</head>
+
+<body>
+<img src="ryanhubler.com/media/pictures/thumb(waterglide).png" alt="thumb(waterglide)">
+<a href="/stream/videos/waterglide">Water Glide</a>
+</body>
+
+</html>
