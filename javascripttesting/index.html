@@ -2,13 +2,15 @@
 <html lang="en">
     <head>
         <script type="text/javascript">
-            
+            function add(x, y){
+                return x + y ;
+            }
             function myfunction() {
                 var mode = prompt("+, -, *, /")
                 var x = prompt("first number")
                 var y = prompt("second number")
                 if (mode == '+'){
-                    document.write(x += y);
+                    document.write(add();)
                 }
                 if (mode == '-'){
                     document.write(x -= y);
