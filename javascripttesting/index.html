@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script type="text/javascript">
+            
+            function myfunction() {
+                var mode = prompt("+, -, *, /")
+                var x = prompt("first number")
+                var y = prompt("second number")
+                if (mode == '+'){
+                    document.write(x += y);
+                    
+                }
+                if (mode == "-"){
+                    document.write(x -= y);
+                }
+                if (mode == "*"){
+                    document.write(x *= y);
+                }
+                if (mode == '/'){
+                    document.write(x /= y);
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            myfunction();
+        </script>
+    </body>
+</html>
