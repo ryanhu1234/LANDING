@@ -14,19 +14,23 @@ font-family: 'Roboto', sans-serif;
 
 }
 p:link {
-  text-decoration: none;
+text-decoration: none;
+color: white;
 }
 
 p:visited {
-  text-decoration: none;
+text-decoration: none;
+color: white;
 }
 
 p:hover {
-  text-decoration: none;
+text-decoration: none;
+color: white;
 }
 
 p:active {
-  text-decoration: none;
+text-decoration: none;
+color: white;
 } 
 
 
