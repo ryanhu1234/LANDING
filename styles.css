@@ -11,25 +11,20 @@ color: white;
 }
 p{
 font-family: 'Roboto', sans-serif;
-
 }
-/* unvisited link */
 p:link {
-  color: white;
+  text-decoration: none;
 }
 
-/* visited link */
 p:visited {
-  color: white;
+  text-decoration: none;
 }
 
-/* mouse over link */
 p:hover {
-  color: white;
+  text-decoration: underline;
 }
 
-/* selected link */
 p:active {
-  color: white;
+  text-decoration: underline;
 }
 
