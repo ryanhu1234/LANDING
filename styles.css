@@ -13,19 +13,19 @@ p:link{
 font-family: 'Roboto', sans-serif;
 text-decoration: none;
 }
-a:link {
+p:link {
   background-color: yellow;
 }
 
-a:visited {
+p:visited {
   background-color: cyan;
 }
 
-a:hover {
+p:hover {
   background-color: lightgreen;
 }
 
-a:active {
+p:active {
   background-color: hotpink;
 } 
 
