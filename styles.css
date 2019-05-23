@@ -13,24 +13,23 @@ p{
 font-family: 'Roboto', sans-serif;
 
 }
+/* unvisited link */
 p:link {
-text-decoration: none;
-color: white;
+  color: white;
 }
 
+/* visited link */
 p:visited {
-text-decoration: none;
-color: white;
+  color: white;
 }
 
+/* mouse over link */
 p:hover {
-text-decoration: none;
-color: white;
+  color: white;
 }
 
+/* selected link */
 p:active {
-text-decoration: none;
-color: white;
-} 
-
+  color: white;
+}
 
