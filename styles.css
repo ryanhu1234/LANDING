@@ -12,19 +12,21 @@ color: white;
 p{
 font-family: 'Roboto', sans-serif;
 }
-p:link {
-  text-decoration: none;
+a:link {
+  color: white;
 }
 
-p:visited {
-  text-decoration: none;
+/* visited link */
+a:visited {
+  color: white;
 }
 
-p:hover {
-  text-decoration: underline;
+/* mouse over link */
+a:hover {
+  color: white;
 }
 
-p:active {
-  text-decoration: underline;
-}
+/* selected link */
+a:active {
+  color: white;
 
